@@ -18,6 +18,8 @@ void Exhaustive::crypt_auto(int n)
 			}
 			if (check_duplicate(m_variable.size() - 1))
 				continue;
+			if (lead_zero())
+				continue;
 			if (found_result())
 			{
 				cout << "´ð°¸Îª£º " << m_term[0] << m_task << m_term[1] << "=" << m_term[2];

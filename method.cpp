@@ -97,12 +97,19 @@ bool Exhaustive::check_duplicate(int n)	//递归最外层直接返回false，下一层比较0 1
 
 	for (int i = 0; i < n; i++)
 	{
-		for (int j = i + 1; j < n; j++)
+		for (int j = i + 1; j <= n; j++)
 		{
 			if (m_term[get_term(m_variable.find(m_key[i])->second[0])][get_index(m_variable.find(m_key[i])->second[0])] == m_term[get_term(m_variable.find(m_key[j])->second[0])][get_index(m_variable.find(m_key[j])->second[0])])
 				return true;
 		}
 	}
+	return false;
+}
+
+bool Exhaustive::lead_zero(void)
+{
+	if (m_term[0][0] == '0' || m_term[1][0] == '0' || m_term[2][0] == '0')
+		return true;
 	return false;
 }
 

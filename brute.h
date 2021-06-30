@@ -17,6 +17,7 @@ private:
 	vector<int> m_range;	//储存取值表
 	char m_task;	//储存'+' '-' '*' '/'
 	string m_term[3];	//储存三项
+	bool lead_zero();
 	bool solved;
 public:
 	Exhaustive();	//构造函数，为solved提供初始值false
