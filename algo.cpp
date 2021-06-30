@@ -10,13 +10,13 @@ void Exhaustive::crypt_auto(int n)
 		return;
 	if (n == 0)
 	{
-		for (int i = 0; i < range.size(); i++)
+		for (int i = 0; i < m_range.size(); i++)
 		{
-			term[get_term(unknown[unknown.size()-1])][get_index(unknown[unknown.size()-1])] = range[i] + '0';
+			m_term[get_term(m_unknown[m_unknown.size()-1])][get_index(m_unknown[m_unknown.size()-1])] = m_range[i] + '0';
 			if (check_duplicate())	continue;
 			if (found_result())
 			{
-				cout << "答案为： " << term[0] << task << term[1] << "=" << term[2];
+				cout << "答案为： " << m_term[0] << m_task << m_term[1] << "=" << m_term[2];
 				cout << endl;
 				done = true;
 				return;
@@ -24,9 +24,9 @@ void Exhaustive::crypt_auto(int n)
 		}
 		return;
 	}
-	for (int i = 0; i < range.size(); i++)
+	for (int i = 0; i < m_range.size(); i++)
 	{
-		term[get_term(unknown[unknown.size()- 1 - n])][get_index(unknown[unknown.size() - 1 - n])] = range[i] + '0';
+		m_term[get_term(m_unknown[m_unknown.size()- 1 - n])][get_index(m_unknown[m_unknown.size() - 1 - n])] = m_range[i] + '0';
 		crypt_auto(n - 1);
 	}
 }

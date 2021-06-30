@@ -10,10 +10,10 @@ using namespace std;
 class Exhaustive
 {
 private:
-	vector<int> unknown;	//储存未知数在表达式的下标
-	vector<int> range;	//储存取值表
-	char task;	//储存'+' '-' '*' '/'
-	string term[3];	//储存三项
+	vector<int> m_unknown;	//储存未知数在表达式的下标
+	vector<int> m_range;	//储存取值表
+	char m_task;	//储存'+' '-' '*' '/'
+	string m_term[3];	//储存三项
 public:
 	void split(string str);	//将表达式拆分成三项储存在term中，将符号储存在task中，将未知数下标储存在vector<int>unknown中
 	void process(void);	//获取用户输入，提供确认信息，并记录穷举耗费的时间。

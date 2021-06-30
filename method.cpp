@@ -4,32 +4,32 @@ using namespace std;
 
 int Exhaustive::get_index(int n)
 {
-	if (n < term[0].length())
+	if (n < m_term[0].length())
 		return n;
-	else if (n > term[0].length() && n <= term[0].length() + term[1].length())
-		return n - term[0].length() - 1;
-	else if (n > term[0].length() + term[1].length() + 1)
-		return n - term[0].length() - term[1].length() - 2;
+	else if (n > m_term[0].length() && n <= m_term[0].length() + m_term[1].length())
+		return n - m_term[0].length() - 1;
+	else if (n > m_term[0].length() + m_term[1].length() + 1)
+		return n - m_term[0].length() - m_term[1].length() - 2;
 }
 
 int Exhaustive::get_term(int n)
 {
-	if (n < term[0].length())
+	if (n < m_term[0].length())
 		return 0;
-	else if (n > term[0].length() && n <= term[0].length() + term[1].length())
+	else if (n > m_term[0].length() && n <= m_term[0].length() + m_term[1].length())
 		return 1;
-	else if (n > term[0].length() + term[1].length() + 1)
+	else if (n > m_term[0].length() + m_term[1].length() + 1)
 		return 2;
 }
 
 bool Exhaustive::found_result(void)
 {
-	switch (task)
+	switch (m_task)
 	{
-	case '+':	return atoi(term[0].c_str()) + atoi(term[1].c_str()) == atoi(term[2].c_str());
-	case '-':	return atoi(term[0].c_str()) - atoi(term[1].c_str()) == atoi(term[2].c_str());
-	case '*':	return atoi(term[0].c_str()) * atoi(term[1].c_str()) == atoi(term[2].c_str());
-	case '/':	if (atoi(term[1].c_str()) == 0) return false; return atoi(term[0].c_str()) / atoi(term[1].c_str()) == atoi(term[2].c_str());
+	case '+':	return atoi(m_term[0].c_str()) + atoi(m_term[1].c_str()) == atoi(m_term[2].c_str());
+	case '-':	return atoi(m_term[0].c_str()) - atoi(m_term[1].c_str()) == atoi(m_term[2].c_str());
+	case '*':	return atoi(m_term[0].c_str()) * atoi(m_term[1].c_str()) == atoi(m_term[2].c_str());
+	case '/':	if (atoi(m_term[1].c_str()) == 0) return false; return atoi(m_term[0].c_str()) / atoi(m_term[1].c_str()) == atoi(m_term[2].c_str());
 	}
 	cout << "格式错误。" << endl;
 	exit(EXIT_FAILURE);
@@ -45,11 +45,11 @@ void Exhaustive::split(string str)
 		{
 			if (*it == '+' || *it == '-' || *it == '*' || *it == '/')
 			{
-				this->task = *it;
+				this->m_task = *it;
 				operation = true;
 				continue;
 			}
-			term[0] += *it;
+			m_term[0] += *it;
 		}
 		else if (!equal_sign)
 		{
@@ -58,14 +58,14 @@ void Exhaustive::split(string str)
 				equal_sign = true;
 				continue;
 			}
-			term[1] += *it;
+			m_term[1] += *it;
 		}
 		else
 		{
-			term[2] += *it;
+			m_term[2] += *it;
 		}
 		if (isalpha(*it))
-			unknown.push_back(it - str.begin());
+			m_unknown.push_back(it - str.begin());
 	}
 	return;
 }
@@ -73,18 +73,18 @@ void Exhaustive::split(string str)
 bool Exhaustive::check_duplicate(void)
 {
 	bool jump = false;
-	for (int i = 0; i < unknown.size() - 1; i++)
+	for (int i = 0; i < m_unknown.size() - 1; i++)
 	{
 		if (jump)
 			break;
-		for (int j = i + 1; j < unknown.size(); j++)
+		for (int j = i + 1; j < m_unknown.size(); j++)
 		{
-			if (!isdigit(term[get_term(unknown[i])][get_index(unknown[i])]))
+			if (!isdigit(m_term[get_term(m_unknown[i])][get_index(m_unknown[i])]))
 			{
 				jump = true;
 				break;
 			}
-			if (term[get_term(unknown[i])][get_index(unknown[i])] == term[get_term(unknown[j])][get_index(unknown[j])])
+			if (m_term[get_term(m_unknown[i])][get_index(m_unknown[i])] == m_term[get_term(m_unknown[j])][get_index(m_unknown[j])])
 			{
 				return true;
 			}
@@ -104,32 +104,32 @@ void Exhaustive::process(void)
 	cin.get(ch);
 	while (isdigit(ch))
 	{
-		range.push_back(ch - '0');
+		m_range.push_back(ch - '0');
 		cin.get(ch);
 		while (ch == ' ')
 			cin.get(ch);
 	}
 	cout << endl;
 	cout << "请确认输入信息： " << endl;
-	cout << "第一项： " << term[0] << endl;
-	cout << "第二项： " << term[1] << endl;
-	cout << "第三项： " << term[2] << endl;
-	cout << "符号： " << task << endl;
+	cout << "第一项： " << m_term[0] << endl;
+	cout << "第二项： " << m_term[1] << endl;
+	cout << "第三项： " << m_term[2] << endl;
+	cout << "符号： " << m_task << endl;
 	cout << "未知数： ";
-	for (auto it = this->unknown.begin(); it != this->unknown.end(); it++)
+	for (auto it = this->m_unknown.begin(); it != this->m_unknown.end(); it++)
 	{
 		cout << "第" << get_term(*it) + 1 << "项第" << get_index(*it) + 1 << "个" << " ";
 	}
 	cout << endl;
 	cout << "取值范围: ";
-	for (auto it = this->range.begin(); it != this->range.end(); it++)
+	for (auto it = this->m_range.begin(); it != this->m_range.end(); it++)
 	{
 		cout << *it << " ";
 	}
 	cout << endl;
 	clock_t start_time, end_time;
 	start_time = clock();
-	crypt_auto(unknown.size() - 1);
+	crypt_auto(m_unknown.size() - 1);
 	end_time = clock();
 	cout << "穷举用时： " << (static_cast<double>(end_time) - static_cast<double>(start_time)) / CLOCKS_PER_SEC << " 秒";
 	cout << endl;
