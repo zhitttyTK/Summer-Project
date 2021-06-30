@@ -2,6 +2,12 @@
 
 using namespace std;
 
+Exhaustive::Exhaustive()
+{
+	m_task = '#';
+	solved = false;
+}
+
 int Exhaustive::get_index(int n)
 {
 	if (n < m_term[0].length())
@@ -31,7 +37,7 @@ bool Exhaustive::found_result(void)
 	case '*':	return atoi(m_term[0].c_str()) * atoi(m_term[1].c_str()) == atoi(m_term[2].c_str());
 	case '/':	if (atoi(m_term[1].c_str()) == 0) return false; return atoi(m_term[0].c_str()) / atoi(m_term[1].c_str()) == atoi(m_term[2].c_str());
 	}
-	cout << "格式错误。" << endl;
+	cout << "未知错误。" << endl;
 	exit(EXIT_FAILURE);
 }
 
@@ -39,6 +45,7 @@ void Exhaustive::split(string str)
 {
 	bool operation = false;
 	bool equal_sign = false;
+	bool key_dup = false;
 	for (string::iterator it = str.begin(); it != str.end(); it++)
 	{
 		if (!operation)
@@ -65,29 +72,35 @@ void Exhaustive::split(string str)
 			m_term[2] += *it;
 		}
 		if (isalpha(*it))
-			m_unknown.push_back(it - str.begin());
+		{
+			key_dup = false;
+			m_variable[*it].push_back(it - str.begin());
+			for (auto itr = m_key.begin(); itr != m_key.end(); itr++)
+			{
+				if (*itr == *it)
+				{
+					key_dup = true;
+					break;
+				}
+			}
+			if (key_dup == false)
+				m_key.push_back(*it);
+		}
 	}
 	return;
 }
 
-bool Exhaustive::check_duplicate(void)
+bool Exhaustive::check_duplicate(int n)	//递归最外层直接返回false，下一层比较0 1，再下一层比较0 2和1 2，以此类推直至最内层比较全部
 {
-	bool jump = false;
-	for (int i = 0; i < m_unknown.size() - 1; i++)
+	if (n == 0)
+		return false;
+
+	for (int i = 0; i < n; i++)
 	{
-		if (jump)
-			break;
-		for (int j = i + 1; j < m_unknown.size(); j++)
+		for (int j = i + 1; j < n; j++)
 		{
-			if (!isdigit(m_term[get_term(m_unknown[i])][get_index(m_unknown[i])]))
-			{
-				jump = true;
-				break;
-			}
-			if (m_term[get_term(m_unknown[i])][get_index(m_unknown[i])] == m_term[get_term(m_unknown[j])][get_index(m_unknown[j])])
-			{
+			if (m_term[get_term(m_variable.find(m_key[i])->second[0])][get_index(m_variable.find(m_key[i])->second[0])] == m_term[get_term(m_variable.find(m_key[j])->second[0])][get_index(m_variable.find(m_key[j])->second[0])])
 				return true;
-			}
 		}
 	}
 	return false;
@@ -115,10 +128,16 @@ void Exhaustive::process(void)
 	cout << "第二项： " << m_term[1] << endl;
 	cout << "第三项： " << m_term[2] << endl;
 	cout << "符号： " << m_task << endl;
-	cout << "未知数： ";
-	for (auto it = this->m_unknown.begin(); it != this->m_unknown.end(); it++)
+	cout << endl;
+	cout << "未知数：" << endl;
+	for (auto it = m_variable.begin(); it != m_variable.end(); it++)
 	{
-		cout << "第" << get_term(*it) + 1 << "项第" << get_index(*it) + 1 << "个" << " ";
+		cout << "变量 " << it->first << " 位于：";
+		for (auto itr = it->second.begin(); itr != it->second.end(); itr++)
+		{
+			cout << "第" << get_term(*itr) + 1 << "项 " << "第" << get_index(*itr) + 1 << "位  ";
+		}
+		cout << endl;
 	}
 	cout << endl;
 	cout << "取值范围: ";
@@ -127,9 +146,10 @@ void Exhaustive::process(void)
 		cout << *it << " ";
 	}
 	cout << endl;
+	cout << endl;
 	clock_t start_time, end_time;
 	start_time = clock();
-	crypt_auto(m_unknown.size() - 1);
+	crypt_auto(m_variable.size() - 1);
 	end_time = clock();
 	cout << "穷举用时： " << (static_cast<double>(end_time) - static_cast<double>(start_time)) / CLOCKS_PER_SEC << " 秒";
 	cout << endl;
