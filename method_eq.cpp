@@ -276,28 +276,3 @@ bool Equation::check(void)
 
 	return true;
 }
-
-void Equation::cramer_rule(void)
-{
-	Determinant* temp_obj = new Determinant;
-	double temp_res;
-	m_denominator = temp_obj->calc(m_determinant, m_determinant.size());
-	cout << "D = " << m_denominator << endl;
-	cout << endl;
-	if (m_denominator == 0)
-	{
-		cout << "²»ÊÊÓÃ¡£" << endl;
-		return;
-	}
-	int msg;
-	for (msg = 0; msg < order.size(); msg++)
-	{
-		convert(msg);
-		temp_res = temp_obj->calc(m_temp_deter, m_temp_deter.size());
-		cout << "D" << msg + 1 << " = " << temp_res << "  ";
-		cout << order[msg] << " = " << "D" << msg + 1 << " / D = " << temp_res / m_denominator << endl;
-	}
-
-
-	return;
-}
