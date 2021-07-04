@@ -15,24 +15,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cryptarithm_alpha.cpp">
+    <ClCompile Include="main_here.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="cryptarithm_beta.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="brute_force_beta.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="method.cpp">
+    <ClCompile Include="method_ex.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="algo.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="method_eq.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="method_dt.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="brute.h">
+    <ClInclude Include="powercalc.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

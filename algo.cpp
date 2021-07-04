@@ -1,4 +1,4 @@
-#include "brute.h"
+#include "powercalc.h"
 
 using namespace std;
 
@@ -46,4 +46,31 @@ void Exhaustive::crypt_auto(int n)
 			continue;
 		crypt_auto(n - 1);
 	}
+}
+
+double Determinant::calc(vector<vector<double>> deter, int n)
+{
+	vector<vector<int>> idx_permutation;
+	vector<int> idx_init = inivec(n);
+	vector<int> idx_temp;
+	permutation(idx_init, idx_permutation, 0);
+	int row;	//行标
+	int col;	//列标
+	double term;
+
+	double result = 0;
+
+	for (int i = 0; i < static_cast<int>(idx_permutation.size()); i++)	//遍历每一项
+	{
+		idx_temp = idx_permutation[i];	//列标取所有可能的排列
+		term = term_positive(idx_temp) ? 1.0 : -1.0;
+		row = 0;	//行标取1 2 3 4 ... n
+		for (int j = 0; j < static_cast<int>(idx_temp.size()); j++)	//遍历每一个元素
+		{
+			col = idx_temp[j];
+			term *= deter[row++][col];
+		}
+		result += term;
+	}
+	return result;
 }

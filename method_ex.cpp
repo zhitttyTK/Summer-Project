@@ -1,4 +1,4 @@
-#include "brute.h"
+#include "powercalc.h"
 
 using namespace std;
 
