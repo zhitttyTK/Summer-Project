@@ -153,6 +153,7 @@
     <ClCompile Include="method_ex.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="method_oc.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="powercalc.h" />

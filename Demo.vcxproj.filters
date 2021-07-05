@@ -30,6 +30,9 @@
     <ClCompile Include="method_dt.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="method_oc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="powercalc.h">

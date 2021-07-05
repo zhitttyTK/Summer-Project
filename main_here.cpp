@@ -9,6 +9,7 @@ int main()
 	cout << "'A' 穷举法破解填数题" << endl;
 	cout << "'B' 解方程组" << endl;
 	cout << "'C' 解行列式" << endl;
+	cout << "'D' 普通计算器" << endl;
 	cout << "'Q' 退出" << endl;
 	cout << endl;
 	cout << "需求：";
@@ -37,6 +38,13 @@ int main()
 			na.process();
 			cout << endl;
 		}
+		else if (ch == 'D')
+		{
+			cin.get(ch);
+			ordinary_calc lala;
+			lala.process();
+			cout << endl;
+		}
 		else
 		{
 			cout << "无此功能。" << endl;
@@ -44,6 +52,7 @@ int main()
 		cout << "'A' 穷举法破解填数题" << endl;
 		cout << "'B' 解方程组" << endl;
 		cout << "'C' 解行列式" << endl;
+		cout << "'D' 普通计算器" << endl;
 		cout << "'Q' 退出" << endl;
 		cout << endl;
 		cout << "需求：";

@@ -100,3 +100,37 @@ void Equation::cramer_rule(void)
 
 	return;
 }
+
+double ordinary_calc::execute(stack<char>& op, stack<double>& opr)
+{
+	double result;
+	double right_opr = m_operand.top();	//栈顶是运算符右边的数
+	m_operand.pop();
+	double left_opr = m_operand.top();	//删掉一个后就是左边的
+	m_operand.pop();
+
+	switch (m_operator.top())
+	{
+	case '+':
+		result = left_opr + right_opr;
+		break;
+	case '-':
+		result = left_opr - right_opr;
+		break;
+	case '*':
+		result = left_opr * right_opr;
+		break;
+	case '/':
+		result = left_opr / right_opr;
+		break;
+	case '^':
+		result = pow(left_opr, right_opr);
+		break;
+	default:
+		throw runtime_error{ string{"Invalid operator: "} + m_operator.top() };
+	}
+
+	m_operator.pop();	//执行完一次运算，删掉顶部运算符
+	m_operand.push(result);		//保存结果
+	return result;
+}

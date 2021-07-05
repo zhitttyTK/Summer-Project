@@ -8,6 +8,9 @@
 #include <map>
 #include <cmath>
 #include <iomanip>
+#include <stack>
+#include <algorithm>
+#include <stdexcept>
 
 using namespace std;
 
@@ -76,4 +79,15 @@ private:
 public:
 	double calc(vector<vector<double>> deter, int n);	//全排列求解行列式
 	void process(void);	//接口
+};
+
+class ordinary_calc
+{
+private:
+	stack<char> m_operator;	//储存运算符的栈
+	stack<double> m_operand;	//储存数字的栈
+	int precedence(const char op);	//返回符号的算数优先级
+	double execute(stack<char>& m_operator, stack<double>& m_operand);	//进行一次运算
+public:
+	void process(void);	//交互
 };
