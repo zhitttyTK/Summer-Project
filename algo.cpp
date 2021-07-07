@@ -108,6 +108,7 @@ double ordinary_calc::execute(stack<char>& op, stack<double>& opr)
 	m_operand.pop();
 	double left_opr = m_operand.top();	//删掉一个后就是左边的
 	m_operand.pop();
+	
 
 	switch (m_operator.top())
 	{

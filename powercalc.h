@@ -78,7 +78,7 @@ private:
 	bool term_positive(vector<int>& seq);	//通过逆序数判断幂是否为正
 public:
 	double calc(vector<vector<double>> deter, int n);	//全排列求解行列式
-	void process(void);	//接口
+	void process(void);	//交互
 };
 
 class ordinary_calc
